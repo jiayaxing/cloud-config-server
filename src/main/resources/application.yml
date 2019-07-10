@@ -1,0 +1,26 @@
+
+server:
+  port: 8085
+eureka:
+  client:
+    fetch-registry: true #是否从eureka获取注册信息
+    register-with-eureka: true #是否要将自己注册到eureka上去
+    service-url:
+      defaultZone: http://root:123456@localhost:8866/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 1 #心跳时间
+    lease-expiration-duration-in-seconds: 2 #让eureka检测心跳的异常间隔时间
+
+# GET  访问localhost:8085/cloud-gateway-server/pro/springcloud 即可测试是否能访问到git了,或者直接访问http://localhost:8085/cloud-gateway-server-pro.properties即可得到配置文件信息。
+#访问规则是config-server/git配置文件的项目名/git配置文件的版本（dev/test/pro）/分支，如果不加分支则默认访问master
+spring:
+  application:
+    name: cloud-config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/jiayaxing/cloud-config-data.git  #git仓库配置数据项目地址
+          username: git账户
+          password: git密码
+          search-paths: config-data #仓库下文件夹的地址
